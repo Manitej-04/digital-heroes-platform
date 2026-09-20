@@ -1,36 +1,219 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏌️ Digital Heroes — Golf Performance, Charity & Monthly Draw Platform
 
-## Getting Started
+<p align="center">
+  <strong>A full-stack subscription platform combining golf performance tracking, charitable giving, and a monthly prize draw.</strong>
+</p>
 
-First, run the development server:
+<p align="center">
+  <a href="https://digital-heroes-sigma-lemon.vercel.app">
+    <img src="https://img.shields.io/badge/Live%20Demo-Vercel-black?style=for-the-badge&logo=vercel" alt="Live Demo"/>
+  </a>
+  <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" alt="Next.js"/>
+  <img src="https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase" alt="Supabase"/>
+  <img src="https://img.shields.io/badge/Tailwind%20CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss" alt="Tailwind CSS"/>
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<p align="center">
+  <a href="https://digital-heroes-sigma-lemon.vercel.app">🌐 Live Application</a>
+  •
+  <a href="#-architecture">Architecture</a>
+  •
+  <a href="#-core-business-logic">Business Logic</a>
+  •
+  <a href="#-testing">Testing</a>
+</p>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📌 Project Overview
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Digital Heroes** is a full-stack web application designed around a subscription-driven golf community.
 
-## Learn More
+The platform combines three core experiences:
 
-To learn more about Next.js, take a look at the following resources:
+- ⛳ **Golf performance tracking**
+- ❤️ **Charitable contribution management**
+- 🎟️ **Monthly prize draw participation**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Subscribers can maintain their latest Stableford scores, select a charity and contribution percentage, participate in monthly draws, and track potential winnings.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Administrators have a dedicated operational dashboard for managing users, subscriptions, monthly draws, charities, winner verification, payouts, and platform analytics.
 
-## Deploy on Vercel
+The application was designed with a strong focus on **business-rule accuracy, secure data access, responsive UX, and scalable application architecture**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚀 Live Demo
+
+### Production
+
+**https://digital-heroes-sigma-lemon.vercel.app**
+
+The application is deployed on **Vercel** with **Supabase PostgreSQL/Auth/Storage** as the backend infrastructure.
+
+> **Note:** Subscription payments currently use a clearly labelled demo/test subscription adapter rather than live Stripe billing. This allows the complete subscription lifecycle and access-control logic to be demonstrated without processing real payments.
+
+---
+
+# ✨ Key Features
+
+## 👤 Subscriber Experience
+
+### Authentication
+
+- User signup and login
+- Supabase Authentication
+- Protected subscriber routes
+- Authentication-aware dashboard
+- Subscription-based access control
+
+### Subscription Management
+
+Supports:
+
+- Monthly subscription
+- Yearly subscription
+- Subscription status tracking
+- Subscription period tracking
+- Cancellation flow
+- Lapsed subscription detection
+- Real-time effective subscription checks
+
+### Golf Score Management
+
+Subscribers can:
+
+- Add Stableford scores
+- Edit scores
+- Maintain a rolling history
+- View their latest scores
+- Participate in monthly draws using their latest available scores
+
+Business rules include:
+
+- Stableford score range: **1–45**
+- One score per date
+- Maximum of **5 retained scores**
+- New scores replace the oldest retained score
+- Scores are displayed newest first
+
+### Charity Contributions
+
+Subscribers can:
+
+- Select their preferred charity
+- Configure contribution percentage
+- Choose a contribution between **10% and 100%**
+- View their selected charity
+- Review charity impact information
+
+### Monthly Draw
+
+Subscribers can view:
+
+- Upcoming draws
+- Published draw numbers
+- Match results
+- Prize information
+- Winner/payment status
+
+### Winner Verification
+
+Potential winners can upload supporting evidence such as a screenshot of their golf platform score.
+
+The system supports:
+
+- Secure file upload
+- File type validation
+- File size validation
+- User-specific storage paths
+- Winner evidence submission
+- Admin verification
+- Approval/rejection workflow
+- Payment status tracking
+
+---
+
+# 🛠️ Admin Platform
+
+The application includes a dedicated administrator experience.
+
+## User Management
+
+Administrators can view:
+
+- Total users
+- Active subscribers
+- Monthly subscribers
+- Yearly subscribers
+- Subscription status
+- Subscription plan
+- Contribution percentage
+- Subscription period
+- Provider information
+
+Users can also be searched from the admin interface.
+
+---
+
+## 🎲 Draw Management
+
+Administrators can:
+
+- Generate monthly draw simulations
+- Select draw mode
+- Generate random draw numbers
+- Use score-frequency weighted generation
+- Review simulation results
+- Review eligible subscribers
+- Review prize pool calculations
+- Publish a monthly draw
+- Prevent duplicate monthly publication
+
+The system validates:
+
+- Exactly 5 draw numbers
+- Number range of 1–45
+- Unique draw numbers
+- Current draw month
+- Duplicate published draws
+
+---
+
+## 🏆 Winner Management
+
+Administrators can:
+
+- View potential winners
+- Review match counts
+- View uploaded evidence
+- Approve winner verification
+- Reject verification
+- Process payout status
+- Track pending vs paid winners
+
+Winner evidence is served using **short-lived signed URLs** rather than exposing private storage files publicly.
+
+---
+
+# 🧠 Core Business Logic
+
+One of the main engineering challenges in this project was translating the product requirements into deterministic and testable business rules.
+
+## Stableford Score Rules
+
+Each subscriber maintains up to five recent scores.
+
+```text
+User Scores
+
+Latest
+  ↓
+45
+38
+42
+35
+40
+  ↓
+Maximum retained scores = 5
